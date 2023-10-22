@@ -12,20 +12,3 @@ jobs:
       - name: Install PiVPN
         run: |
           curl -L https://install.pivpn.io | bash
-          
-      - name: Configure PiVPN
-        run: |
-          # Replace 'your_username' with the desired username for your WireGuard client.
-          pivpn add github
-
-      - name: Show WireGuard Configuration
-        run: |
-          cat /etc/wireguard/wg0.conf
-          
-      - name: Start PiVPN
-        run: |
-          pivpn -a
-
-      - name: Display QR Code
-        run: |
-          pivpn -qr
