@@ -1,4 +1,4 @@
-name: VPN Setup
+name: SSH Setup
 
 on:
   push:
@@ -9,6 +9,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Install PiVPN
+      - name: Install OpenSSH Server
         run: |
-          curl -L https://install.pivpn.io | bash
+          sudo apt update
+          sudo apt install -y openssh-server
+          
+      - name: Configure SSH User
+        run: |
+          # Replace 'your_username' with your desired SSH username.
+          sudo useradd -m -s /bin/bash nono
+          sudo passwd nono
+          sudo usermod -aG sudo nono
+          
+      - name: Display SSH Configuration
+        run: |
+          sudo systemctl status ssh
+          sudo systemctl is-active ssh
+          sudo systemctl is-enabled ssh
+          
+      - name: Set Up SSH Keys
+        run: |
+          # Generate an SSH key pair if you don't have one already.
+          ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -N ""
+          # Copy the public key to the authorized_keys file for the user.
+          mkdir -p /home/nono/.ssh
+          cat ~/.ssh/id_rsa.pub > /home/nono/.ssh/authorized_keys
+          sudo chown -R nono:nono /home/nono/.ssh
+          
+      - name: Show SSH Configuration
+        run: |
+          sudo cat /etc/ssh/sshd_config
+
