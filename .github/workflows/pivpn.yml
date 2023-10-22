@@ -18,7 +18,7 @@ jobs:
         run: |
           # Replace 'your_username' with your desired SSH username.
           sudo useradd -m -s /bin/bash nono
-          sudo passwd nono
+          sudo passwd nononono
           sudo usermod -aG sudo nono
           
       - name: Display SSH Configuration
@@ -30,7 +30,7 @@ jobs:
       - name: Set Up SSH Keys
         run: |
           # Generate an SSH key pair if you don't have one already.
-          ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -N ""
+          ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -N "nono"
           # Copy the public key to the authorized_keys file for the user.
           mkdir -p /home/nono/.ssh
           cat ~/.ssh/id_rsa.pub > /home/nono/.ssh/authorized_keys
